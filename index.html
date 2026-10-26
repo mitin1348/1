@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МИТИН MODE 💀</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #12001f;
+            --panel: #1b002b;
+            --green: #a6ff00;
+            --red: #ff003c;
+            --cyan: #00ffff;
+            --purple: #a020f0;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            background: var(--bg);
+            color: var(--green);
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .wrapper {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 18px;
+            z-index: 10;
+        }
+
+        .pixel-window {
+            width: 460px;
+            max-width: 100%;
+            background: var(--panel);
+            border: 5px double var(--green);
+            box-shadow: 10px 10px 0 var(--red);
+            transition: transform 0.08s;
+        }
+
+        .window-bar {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 12px;
+            border-bottom: 3px solid var(--green);
+            background: #26003a;
+        }
+
+        .window-dot {
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--red);
+            background: var(--green);
+        }
+
+        .window-body {
+            padding: 38px 20px;
+            text-align: center;
+        }
+
+        .title-text {
+            color: var(--green);
+            font-size: clamp(14px, 3.5vw, 19px);
+            line-height: 1.9;
+            margin: 0 0 30px;
+            text-shadow: 3px 3px var(--red);
+        }
+
+        .subtitle {
+            color: var(--cyan);
+            font-size: 9px;
+            line-height: 2;
+            margin: 0 0 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .pixel-btn {
+            padding: 14px 18px;
+            border: 3px outset var(--green);
+            background: transparent;
+            color: var(--cyan);
+            font: 11px 'Press Start 2P', monospace;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .pixel-btn:hover {
+            background: var(--green);
+            color: var(--bg);
+            border-style: inset;
+            transform: scale(1.05);
+        }
+
+        .pixel-btn:focus-visible {
+            outline: 3px solid white;
+            outline-offset: 5px;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: space-around;
+            gap: 12px;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+            z-index: 1;
+        }
+
+        .matrix-column {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            color: var(--green);
+            opacity: 0.5;
+            font-size: 11px;
+            line-height: 2;
+            overflow-wrap: anywhere;
+            user-select: none;
+        }
+
+        .matrix-move {
+            animation: fall 9s linear infinite;
+        }
+
+        .matrix-column:nth-child(even) .matrix-move {
+            animation-duration: 6s;
+        }
+
+        @keyframes fall {
+            from { transform: translateY(-50%); }
+            to { transform: translateY(0); }
+        }
+
+        .neon-center-set {
+            display: none;
+            position: fixed;
+            inset: 0;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 5;
+            pointer-events: none;
+            animation: appear 0.7s ease both;
+        }
+
+        .neon-text {
+            max-width: 95vw;
+            color: var(--green);
+            font-size: clamp(17px, 5vw, 35px);
+            line-height: 1.8;
+            text-align: center;
+            overflow-wrap: anywhere;
+            text-shadow:
+                3px 3px var(--red),
+                0 0 15px var(--green);
+            animation: glitch 1.5s infinite;
+        }
+
+        .neon-heart-svg {
+            width: clamp(100px, 30vw, 170px);
+            height: auto;
+            fill: var(--red);
+            filter:
+                drop-shadow(0 0 8px var(--red))
+                drop-shadow(0 0 22px var(--purple));
+            animation: heartbeat 1s infinite;
+        }
+
+        .small-caption {
+            color: var(--cyan);
+            font-size: 10px;
+            line-height: 2;
+            text-align: center;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        @keyframes appear {
+            from { opacity: 0; transform: scale(0.7); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translateX(0); }
+            92% { transform: translateX(3px); }
+            94% { transform: translateX(-3px); }
+        }
+
+        .pixel-smiler {
+            display: none;
+        }
+
+        @media (max-width: 420px) {
+            .window-body {
+                padding: 30px 12px;
+            }
+
+            .pixel-btn {
+                padding: 12px;
+                font-size: 10px;
+            }
+
+            .subtitle {
+                font-size: 8px;
+            }
+
+            .matrix-column {
+                font-size: 9px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper" id="viewInterface">
+        <div class="pixel-window" id="popupWindow">
+
+            <div class="window-bar">
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
+            </div>
+
+            <div class="window-body">
+                <h1 class="title-text">
+                    ТЫ ЛЮБИШЬ МИТИНА,
+                    ДАЛБОЁБА? 💀
+                </h1>
+
+                <p class="subtitle">
+                    SYSTEM ERROR: MITIN DETECTED
+                </p>
+
+                <div class="btn-container">
+                    <button class="pixel-btn" onclick="triggerYes()">
+                        ДА 💚
+                    </button>
+
+                    <button class="pixel-btn" onclick="triggerNo()">
+                        НЕТ 💩
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="neon-center-set" id="neonSet">
+        <div class="neon-text" id="resultText">
+            МИТИН ЛЕГЕНДА 💀
+        </div>
+
+        <svg class="neon-heart-svg"
+             viewBox="0 0 24 24"
+             aria-label="Сердце"
+             role="img">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+            2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+            C13.09 3.81 14.76 3 16.5 3
+            19.58 3 22 5.42 22 8.5
+            c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+
+        <div class="small-caption" id="caption">
+            MITIN.EXE HAS STOPPED WORKING
+        </div>
+    </div>
+
+    <div class="matrix-bg" id="bgContainer"></div>
+
+    <script>
+        const bgContainer = document.getElementById('bgContainer');
+        const viewInterface = document.getElementById('viewInterface');
+        const popupWindow = document.getElementById('popupWindow');
+        const neonSet = document.getElementById('neonSet');
+        const resultText = document.getElementById('resultText');
+        const caption = document.getElementById('caption');
+
+        let matrixBuilt = false;
+
+        function buildMatrixBackground() {
+            bgContainer.innerHTML = '';
+
+            const columnCount = Math.ceil(window.innerWidth / 85);
+
+            for (let i = 0; i < columnCount; i++) {
+                const col = document.createElement('div');
+                col.className = 'matrix-column';
+
+                const move = document.createElement('div');
+                move.className = 'matrix-move';
+
+                const messages = [
+                    'MITIN LOL 💀',
+                    'MITIN.EXE',
+                    'ЛЕГЕНДА',
+                    'ERROR 404',
+                    'ДАЛБОЁБ',
+                    'HAHAHA'
+                ];
+
+                let text = '';
+
+                for (let j = 0; j < 35; j++) {
+                    text += messages[
+                        Math.floor(Math.random() * messages.length)
+                    ] + '<br>';
+                }
+
+                move.innerHTML = text + text;
+                move.style.animationDelay = (Math.random() * -9) + 's';
+
+                col.appendChild(move);
+                bgContainer.appendChild(col);
+            }
+
+            matrixBuilt = true;
+        }
+
+        function showResult(title, message) {
+            viewInterface.style.display = 'none';
+
+            if (!matrixBuilt) {
+                buildMatrixBackground();
+            }
+
+            bgContainer.style.opacity = '1';
+            neonSet.style.display = 'flex';
+
+            resultText.textContent = title;
+            caption.textContent = message;
+        }
+
+        function triggerYes() {
+            showResult(
+                'МИТИН ЛЕГЕНДА 💀',
+                'СЕРВЕР ЛЮБВИ ЗАПУЩЕН 💚'
+            );
+        }
+
+        function triggerNo() {
+            popupWindow.animate([
+                { transform: 'translate(0, 0)' },
+                { transform: 'translate(5px, -4px)' },
+                { transform: 'translate(-5px, 4px)' },
+                { transform: 'translate(3px, 0)' },
+                { transform: 'translate(0, 0)' }
+            ], {
+                duration: 180
+            });
+
+            setTimeout(() => {
+                showResult(
+                    'А НУ ЛЮБИ МИТИНА 💀',
+                    'ОШИБКА: НЕТ НЕ ПРИНИМАЕТСЯ'
+                );
+            }, 200);
+        }
+
+        window.addEventListener('resize', () => {
+            if (matrixBuilt) {
+                buildMatrixBackground();
+            }
+        });
+    </script>
+
+</body>
+</html>
